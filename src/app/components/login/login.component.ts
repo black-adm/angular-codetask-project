@@ -15,18 +15,21 @@ export class LoginComponent implements OnInit {
   constructor(
     private auth: AuthService,
     private spinner: NgxSpinnerService,
-    private router: Router
+    private router: Router,
     ) {}
 
   ngOnInit(): void {}
 
   async signIn() {
     this.spinner.show()
+
     const result = await this.auth.login(this.email)
     console.log(result)
 
     this.spinner.hide()
-    if(!result.error) this.linkSucces = true 
+    if(!result.error) { 
+      this.linkSucces = true
+    } 
     alert(result.error?.message)
   }
 }

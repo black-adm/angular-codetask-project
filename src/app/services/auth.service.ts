@@ -21,18 +21,22 @@ export class AuthService {
     const user = this.supabase.auth.getUser()
     console.log('user :', user)
 
-    if (user) this._currentUser.next(user)
-    this._currentUser.next(false)
+    if(user) {
+      this._currentUser.next(user)
+    }
+    else {
+      this._currentUser.next(false)
+    }
 
     this.supabase.auth.onAuthStateChange((event, session) => {
-          console.log('event : ', event)
-          console.log('session : ', session)
-
-          if (event === 'SIGNED_IN') this._currentUser.next(session?.user)
-          this._currentUser.next(false)
-          this.router.navigateByUrl('/', { replaceUrl: true })
-        }
-      )
+      console.log('event : ', event);
+      console.log('session : ', session);
+    
+      if (event === 'SIGNED_IN') {
+        this._currentUser.next(session?.user);
+        this.router.navigateByUrl('/', { replaceUrl: true });
+      }
+    })    
   }
 
   login(email: string) {
