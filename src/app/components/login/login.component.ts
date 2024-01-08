@@ -8,7 +8,7 @@ import { AuthService } from 'src/app/services/auth.service'
   templateUrl: './login.component.html',
 })
 export class LoginComponent implements OnInit {
-  email = ''
+  email: string = ''
   linkSuccess = false
 
   constructor(
@@ -17,9 +17,7 @@ export class LoginComponent implements OnInit {
     private router: Router,
     ) {
       this.auth.currentUser.subscribe((user) => {
-        if(user) {
-          this.router.navigateByUrl('/workspace', { replaceUrl: true })
-        }
+        if(user) this.router.navigateByUrl('/workspace', { replaceUrl: true })
       })
     }
 

@@ -7,7 +7,7 @@ import { DataService } from 'src/app/services/data.service';
   templateUrl: './workspace.component.html',
 })
 export class WorkspaceComponent implements OnInit {
-  boards: unknown[] = []
+  boards: any[] = []
   user = this.auth.currentUser
 
   constructor(

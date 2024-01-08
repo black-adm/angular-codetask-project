@@ -1,13 +1,17 @@
-<header class="bg-slate-950">
+<header class="bg-gradient-to-r from-black via-slate-950 to-indigo-950">
     <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="w-full py-6 flex items-center justify-between border-b border-light-pink lg:border-none">
+        <div class="w-full py-6 flex items-center justify-between border-b border-light-pink">
             <div class="flex items-center">
-                <a routerLink="/workspace">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-white lucide lucide-layout-list"><rect width="7" height="7" x="3" y="3" rx="1"/><rect width="7" height="7" x="3" y="14" rx="1"/><path d="M14 4h7"/><path d="M14 9h7"/><path d="M14 15h7"/><path d="M14 20h7"/></svg>
+                <a 
+                    routerLink="/workspace" 
+                    class="flex items-center gap-2 text-white text-lg font-semibold tracking-wide"
+                >
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-light-pink lucide lucide-layout-list"><rect width="7" height="7" x="3" y="3" rx="1"/><rect width="7" height="7" x="3" y="14" rx="1"/><path d="M14 4h7"/><path d="M14 9h7"/><path d="M14 15h7"/><path d="M14 20h7"/></svg>
+                    Codetask
                 </a>
             </div>
 
-            <div class="ml-10 space-x-4 flex items-center">
+            <div class="ml-10 space-x-6 flex items-center">
                 <span class="text-white">
                     {{ (user | async)?.email }}
                 </span>
@@ -16,11 +20,40 @@
             
                 <button 
                     (click)="signOut()"
-                    class="inline-block bg-light-indigo py-1 px-4 border-transparent rounded-md text-white font-medium"
+                    class="inline-flex items-center gap-1 bg-light-indigo py-1 px-4 border-transparent rounded-md text-white font-medium hover:bg-indigo-700"
                 >
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-power"><path d="M12 2v10"/><path d="M18.4 6.6a9 9 0 1 1-12.77.04"/></svg>
                     Sair
                 </button>
             </div>
         </div>  
     </nav>
 </header>
+
+<main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <ul
+        class="grid grid-cols-2 gap-x-4 gap-y-8 sm:grid-cols-3 sm:gap-x-6 lg:grid-cols-4 xl:gap-x-8"
+        role="list"
+    >   
+        <li
+            class="relative bg-gray-50 h-52 rounded-sm font-semibold text-lg py-4 px-4 hover:bg-gray-100 hover:cursor-pointer"
+            *ngFor="let board of boards"
+            [routerLink]="board.boards.id"
+        >
+            {{ board.boards.title }}
+        </li>
+
+        <li
+            (click)="startBoard()"
+            class="relative top-7 h-64 border-2 border-gray-100 rounded-md text-gray-300 text-sm font-semibold tracking-wide py-3 px-6 hover:bg-gray-50 hover:border-none"
+        >
+            <p class="pt-1">
+                Criar novo card
+            </p>
+
+            <span class="flex justify-center items-center text-light-gray pt-20">
+                <svg xmlns="http://www.w3.org/2000/svg" width="45" height="45" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-kanban-square-dashed"><path d="M8 7v7"/><path d="M12 7v4"/><path d="M16 7v9"/><path d="M5 3a2 2 0 0 0-2 2"/><path d="M9 3h1"/><path d="M14 3h1"/><path d="M19 3a2 2 0 0 1 2 2"/><path d="M21 9v1"/><path d="M21 14v1"/><path d="M21 19a2 2 0 0 1-2 2"/><path d="M14 21h1"/><path d="M9 21h1"/><path d="M5 21a2 2 0 0 1-2-2"/><path d="M3 14v1"/><path d="M3 9v1"/></svg>
+            </span>
+        </li>
+    </ul>
+</main>

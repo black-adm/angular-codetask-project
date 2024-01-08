@@ -9,16 +9,17 @@ import { environment } from 'src/environments/environment.development'
 })
 export class AuthService {
   private supabase: SupabaseClient
-  private _currentUser: BehaviorSubject<boolean | User | any> =
-    new BehaviorSubject(null)
+  private _currentUser: BehaviorSubject<boolean | User | any> 
+   = new BehaviorSubject(null)
 
-    constructor(private router: Router, private ngZone: NgZone) {
+    constructor(private router: Router) {
       this.supabase = createClient(
         environment.supabaseUrl,
         environment.supabaseKey
       )
   
       const user = this.supabase.auth.getUser()
+      console.log(user)
   
       if (user) this._currentUser.next(user)
       else this._currentUser.next(false)
@@ -28,22 +29,20 @@ export class AuthService {
         
         else {
           this._currentUser.next(false)
-          ngZone.run(() => {
-            this.router.navigateByUrl('/', { replaceUrl: true })
-          })
+          this.router.navigateByUrl('/', { replaceUrl: true })
         }
       })
     }
 
-  login(email: string) {
-    return this.supabase.auth.signInWithOtp({ email })
-  }
+    login(email: string) {
+      return this.supabase.auth.signInWithOtp({ email })
+    }
 
-  logout() {
-    this.supabase.auth.signOut()
-  }
+    logout() {
+      this.supabase.auth.signOut()
+    }
 
-  get currentUser() {
-    return this._currentUser.asObservable()
-  }
+    get currentUser() {
+      return this._currentUser.asObservable()
+    }
 }
