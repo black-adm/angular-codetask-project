@@ -55,4 +55,36 @@ export class DataService {
         .delete(board)
         .match({ id: board.id })
   }
+
+  async getBoardLists(boardId: string) {
+    const lists = await this.supabase
+        .from(LISTS_TABLE)
+        .select('*')
+        .eq('board_id', boardId)
+        .order('position')
+
+        return lists.data || []
+  }
+
+  async addBoardList(boardId: string, position = 0) {
+    return await this.supabase
+        .from(LISTS_TABLE)
+        .insert({ board_id: boardId, position, title: 'Nova lista' })
+        .select('*')
+        .single()
+  }
+
+  async updateBoardList(list: any) {
+    return await this.supabase
+        .from(LISTS_TABLE)
+        .update(list)
+        .match({ id: list.id })
+  }   
+
+  async delteBoardList(list: any) {
+    return await this.supabase
+        .from(LISTS_TABLE)
+        .delete()
+        .match({ id: list.id })
+  } 
 }
