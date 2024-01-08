@@ -33,4 +33,26 @@ export class DataService {
         .select('boards:board_id(*)')
     return boards.data || []
   }
+
+  async getBoardById(boardId: string) {
+    return await this.supabase
+        .from(BOARD_TABLE)
+        .select('*')
+        .match({ id: boardId })
+        .single()
+  }
+
+  async updateBoard(board: any) {
+    return await this.supabase
+        .from(BOARD_TABLE)
+        .update(board)
+        .match({ id: board.id })
+  }
+
+  async deleteBoard(board: any) {
+    return await this.supabase
+        .from(BOARD_TABLE)
+        .delete(board)
+        .match({ id: board.id })
+  }
 }

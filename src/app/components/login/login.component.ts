@@ -17,7 +17,9 @@ export class LoginComponent implements OnInit {
     private router: Router,
     ) {
       this.auth.currentUser.subscribe((user) => {
-        if(user) this.router.navigateByUrl('/workspace', { replaceUrl: true })
+        if(user) {
+          this.router.navigateByUrl('/workspace', { replaceUrl: true })
+        }
       })
     }
 
@@ -25,9 +27,7 @@ export class LoginComponent implements OnInit {
 
   async signIn() {
       this.spinner.show()
-
       const result = await this.auth.login(this.email)
-      console.log(result)
 
       this.spinner.hide()
 
