@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { SupabaseClient, createClient } from '@supabase/supabase-js';
+import { Subject } from 'rxjs';
 import { environment } from 'src/environments/environment.development';
 
 export const BOARD_TABLE = 'boards'
@@ -81,12 +82,44 @@ export class DataService {
         .match({ id: list.id })
   }   
 
-  async delteBoardList(list: any) {
+  async deleteBoardList(list: any) {
     return await this.supabase
         .from(LISTS_TABLE)
         .delete()
         .match({ id: list.id })
   } 
+
+  async addListCard(listId: string, boardId: string, position = 0) {
+    return await this.supabase
+      .from(CARDS_TABLE)
+      .insert({ board_id: boardId, list_id: listId, position })
+      .select('*')
+      .single();
+  }
+
+  async getListCards(listId: string) {
+    const lists = await this.supabase
+      .from(CARDS_TABLE)
+      .select('*')
+      .eq('list_id', listId)
+      .order('position');
+
+    return lists.data || [];
+  }
+
+  async updateCard(card: any) {
+    return await this.supabase
+      .from(CARDS_TABLE)
+      .update(card)
+      .match({ id: card.id });
+  }
+
+  async deleteCard(card: any) {
+    return await this.supabase
+      .from(CARDS_TABLE)
+      .delete()
+      .match({ id: card.id });
+  }
 
   async addUserToBoard(boardId: string, email: string) {
     const user = await this.supabase
