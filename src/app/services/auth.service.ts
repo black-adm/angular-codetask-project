@@ -23,7 +23,6 @@ export class AuthService {
       if (user) this._currentUser.next(user)
       else this._currentUser.next(false)
       
-  
       this.supabase.auth.onAuthStateChange((event, session) => {
         if (event === 'SIGNED_IN') this._currentUser.next(session?.user)
         
