@@ -87,4 +87,24 @@ export class DataService {
         .delete()
         .match({ id: list.id })
   } 
+
+  async addUserToBoard(boardId: string, email: string) {
+    const user = await this.supabase
+        .from(USERS_TABLE)
+        .select('id')
+        .match({ email })
+        .single()
+
+    if (user.data) {
+      const userId = user.data?.id
+      const userBoard = await this.supabase
+          .from(USER_BOARD_TABLE)
+          .insert({
+            user_id: userId,
+            board_id: boardId
+          })
+          return userBoard
+    }
+    return null
+  }
 }
