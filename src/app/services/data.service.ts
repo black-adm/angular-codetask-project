@@ -22,11 +22,15 @@ export class DataService {
   }
 
   async startBoard() {
-    return this.supabase.from(BOARD_TABLE).insert({})
+    return this.supabase
+        .from(BOARD_TABLE)
+        .insert({ returning: 'minimal' })
   }
 
   async getBoards() {
-    const boards = await this.supabase.from(USER_BOARD_TABLE).select('*')
+    const boards = await this.supabase
+        .from(USER_BOARD_TABLE)
+        .select('boards:board_id(*)')
     return boards.data || []
   }
 }

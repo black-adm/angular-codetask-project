@@ -8,7 +8,7 @@ import { AuthService } from 'src/app/services/auth.service'
   templateUrl: './login.component.html',
 })
 export class LoginComponent implements OnInit {
-  email: string = ''
+  email = ''
   linkSuccess = false
 
   constructor(
