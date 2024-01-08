@@ -16,9 +16,7 @@ export class AuthGuard implements CanActivate {
     return this.auth.currentUser.pipe(
       filter(value => value !== null),
       take(1),
-      map(isAuthenticated => {
-        console.log('isAuthenticated : ', isAuthenticated)
-        
+      map(isAuthenticated => {        
         if (isAuthenticated) return true
         else return this.router.createUrlTree(['/'])
       })
